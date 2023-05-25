@@ -95,3 +95,9 @@ CALCULATE(
 SUM(data[Srazky]),
 dim_datumy[rok] = SELECTEDVALUE(dim_datumy[rok]) - 1)
 
+_______________________________________________________________
+
+14 suma srazek kumulativne = 
+CALCULATE(
+    SUM(data[Srazky]),
+dim_datumy[mesic] <= SELECTEDVALUE(dim_datumy[mesic]))
