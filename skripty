@@ -179,3 +179,22 @@ RETURN
 SWITCH(TRUE(),
 srazky_rok_mesic = min_srazky,"GOLD",
 srazky_rok_mesic = max_srazky,"CYAN")
+
+______________________________________________________
+
+21 roky maximalnich srazek = 
+-- pro danou lokalitu 
+-- 1. Tabulku roku respektujici filtr nad lokalitou
+-- 2. Do tabulky dopocitame rocni srazky (novy sloupec)
+-- 3. V tabulce z bodu 2 hledame maximalni hodnotu
+-- 4. Spojujeme sloupec rok
+VAR tabulka_rocni_srazky = 
+ADDCOLUMNS(
+    VALUES(data[rok]),
+    "rocni_srazky",
+    CALCULATE(SUM(data[Srazky])))
+VAR maximalni_rocni_srazky = MAXX(tabulka_rocni_srazky,[rocni_srazky])
+VAR tabulka_max_rocnich_srazek = 
+FILTER(tabulka_rocni_srazky,[rocni_srazky] =maximalni_rocni_srazky )
+RETURN CONCATENATEX(tabulka_max_rocnich_srazek,data[rok]," ,")
+
