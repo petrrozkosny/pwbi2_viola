@@ -72,11 +72,18 @@ IF(MAX(data[Teplota]) =
     CALCULATE(MAX(data[teplota]))),"CYAN")
 _____________________________________________
 
+11 suma srazek ruzyne = 
+CALCULATE(SUM(data[Srazky]),
+dim_lokality[Lokalita] = "RUZYNE")
+
+___________________________________________
 
 12 pocet dnu bez srazek v ruzyne = 
-
+if(ISFILTERED(dim_datumy[rok]),
 CALCULATE(
     COUNT(data[Datum]),
 dim_lokality[Lokalita] = "RUZYNE",
 data[Srazky] = 0,
-NOT ISBLANK(data[Srazky]))
+NOT ISBLANK(data[Srazky])),
+BLANK())
+
