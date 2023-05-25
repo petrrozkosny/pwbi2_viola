@@ -108,3 +108,12 @@ _______________________________________________________________
 CALCULATE(
     MIN(data[Datum]),
 data[Teplota] = MAX(data[Teplota]))
+
+_________________________________________________________________
+
+16 pocet dnu v ruzyni teplota pod 0 = 
+CALCULATE(
+    MAX(
+    COUNT(data[Datum]),0),
+dim_lokality[Lokalita] = "RUZYNE",
+data[Teplota] < 0)
