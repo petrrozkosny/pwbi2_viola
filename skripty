@@ -222,3 +222,23 @@ FILTER(tabulka_mesicni_srazky,[mesicni_srazky] = maximalni_mesicni_srazky)
 RETURN
 CONCATENATEX(tabulka_max_srazek,data[mesic]," ,")
 
+________________________________________
+
+23 nejdestivejsi lokalita = 
+-- Pokud se suma srazek v dane lokalite rovna maximalni sume srazek
+-- dle lokality napric lokalitami, tak "ano", jinak "ne"
+-- 1. suma srazek v dane lokalite
+-- 2. tabulku se vsemi lokalitami se sumou srazek dle lokality
+-- 3. maximum z bodu 2
+-- 4. Jestli se 1 a 3 rovnaji, pokud ano, tak "ano", jinak "ne"
+VAR suma_srazek = SUM(data[Srazky])
+VAR tabulka_srazek =
+    ADDCOLUMNS(
+    ALL(data[Lokalita]),
+    "suma srazek",
+    CALCULATE(SUM(data[Srazky])))
+
+VAR max_srazky = MAXX(tabulka_srazek,[suma srazek])
+
+RETURN
+IF(suma_srazek = max_srazky,"ANO","NE")
