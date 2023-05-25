@@ -52,3 +52,10 @@ ______________________________
 03 suma srazek rok 2000 = 
 -- TAKTO ANO
 CALCULATE(SUM(data[Srazky]),data[rok] = 2000)
+
+__________________________________
+
+09 maximalni rocni srazky = 
+MAXX(
+    ALL(data[rok]),
+    CALCULATE(SUM(data[Srazky])))
