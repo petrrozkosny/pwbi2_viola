@@ -117,3 +117,35 @@ CALCULATE(
     COUNT(data[Datum]),0),
 dim_lokality[Lokalita] = "RUZYNE",
 data[Teplota] < 0)
+____________________________________________________________
+
+17 suma srazek mezirocne = 
+
+-- suma srazek dany rok a mesic
+VAR srazky_dany_rok = SUM(data[Srazky])
+-- suma srazek predchozi rok a dany mesic
+VAR predchozi_rok = SELECTEDVALUE(dim_datumy[rok]) - 1
+VAR srazky_predchozi_rok = 
+CALCULATE(SUM(data[Srazky]),dim_datumy[rok] = predchozi_rok)
+
+RETURN srazky_dany_rok - srazky_predchozi_rok
+
+_______________________________________________________________
+
+18 datumy maximalnich teplot ruzyne = 
+-- v danem roce
+
+VAR maximalni_teplota_ruzyne = 
+CALCULATE(MAX(data[Teplota]),dim_lokality[Lokalita] = "RUZYNE")
+
+-- tabulku datumu s maximalni teplotou v ruzyni
+
+
+VAR tabulka_datumu = 
+
+CALCULATETABLE(VALUES(data[Datum])
+,data[Teplota] = maximalni_teplota_ruzyne
+,dim_lokality[Lokalita] = "RUZYNE")
+
+RETURN 
+CONCATENATEX(tabulka_datumu,data[Datum],", ")
