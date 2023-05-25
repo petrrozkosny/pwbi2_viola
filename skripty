@@ -33,3 +33,9 @@ UNION(
 ROW("typ_pocasi","prselo"),
 ROW("typ_pocasi","neprselo")
 )
+_________________________________________
+
+01 suma srazek rok 2000 = 
+-- TAKTO NE!
+CALCULATE(SUM(data[Srazky]),FILTER(ALL(data),data[rok] = 2000
+))
