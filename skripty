@@ -39,3 +39,10 @@ _________________________________________
 -- TAKTO NE!
 CALCULATE(SUM(data[Srazky]),FILTER(ALL(data),data[rok] = 2000
 ))
+
+________________________________________________________________
+
+02 suma srazek rok 2000 = 
+
+-- TAKTO ANO, POKUD MI NEJDE VERZE 3
+CALCULATE(SUM(data[Srazky]),FILTER(ALL(data[rok]),data[rok] = 2000))
