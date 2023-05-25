@@ -25,3 +25,11 @@ DAY([datum]) = 8 && MONTH([datum]) = 5,"svatek",
 DAY([datum]) = 8 && MONTH([datum]) = 5,"svatek",
 [datum] in {DATE(2020,04,12)},"svatek","nesvatek"),
 "vikend",IF(WEEKDAY([datum],2)>5,"vikend","nevikend"))
+
+________________________________________________
+
+dim_typ_pocasi = 
+UNION(
+ROW("typ_pocasi","prselo"),
+ROW("typ_pocasi","neprselo")
+)
