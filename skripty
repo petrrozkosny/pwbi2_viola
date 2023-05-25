@@ -87,3 +87,11 @@ data[Srazky] = 0,
 NOT ISBLANK(data[Srazky])),
 BLANK())
 
+______________________________________________________
+
+13 suma srazek predchozi rok = 
+-- suma srazek ve stejnem mesici predchoziho roku
+CALCULATE(
+SUM(data[Srazky]),
+dim_datumy[rok] = SELECTEDVALUE(dim_datumy[rok]) - 1)
+
