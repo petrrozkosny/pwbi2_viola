@@ -198,3 +198,27 @@ VAR tabulka_max_rocnich_srazek =
 FILTER(tabulka_rocni_srazky,[rocni_srazky] =maximalni_rocni_srazky )
 RETURN CONCATENATEX(tabulka_max_rocnich_srazek,data[rok]," ,")
 
+
+_____________________________________________________________
+
+22 nejdestivejsi mesic v lokalite = 
+
+-- 1. Tabulku mesicu
+-- 2. Novy sloupecek se sumou srazek pro dany mesic
+-- 3. Maximum z tabulky z bodu 2
+-- 4. Hodnoty z tabulky filtrovane na hodnotu z bodu 3
+
+VAR tabulka_mesicni_srazky = 
+ADDCOLUMNS(
+    VALUES(data[mesic]),
+"mesicni_srazky",
+CALCULATE(SUM(data[Srazky])))
+
+VAR maximalni_mesicni_srazky = MAXX(tabulka_mesicni_srazky,[mesicni_srazky])
+
+VAR tabulka_max_srazek  =
+FILTER(tabulka_mesicni_srazky,[mesicni_srazky] = maximalni_mesicni_srazky)
+
+RETURN
+CONCATENATEX(tabulka_max_srazek,data[mesic]," ,")
+
