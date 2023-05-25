@@ -6,3 +6,22 @@ SELECTCOLUMNS(
 "kvartal",QUARTER([datum]),
 "mesic",MONTH([datum]),
 "tyden",WEEKNUM([datum],21))
+
+________________________________________________________
+
+dim_datumy = 
+ADDCOLUMNS(
+-- prejemnovavam sloupec vraceny funkci CALENDARAUTO()
+SELECTCOLUMNS(
+    CALENDARAUTO(),"datum",[Date]),
+"rok",YEAR([datum]),
+"kvartal",QUARTER([datum]),
+"mesic",MONTH([datum]),
+"tyden",WEEKNUM([datum],21),
+"den",DAY([datum]),
+"svatek",
+SWITCH(TRUE(),
+DAY([datum]) = 8 && MONTH([datum]) = 5,"svatek",
+DAY([datum]) = 8 && MONTH([datum]) = 5,"svatek",
+[datum] in {DATE(2020,04,12)},"svatek","nesvatek"),
+"vikend",IF(WEEKDAY([datum],2)>5,"vikend","nevikend"))
