@@ -149,3 +149,15 @@ CALCULATETABLE(VALUES(data[Datum])
 
 RETURN 
 CONCATENATEX(tabulka_datumu,data[Datum],", ")
+
+__________________________________________________________
+
+19 tri nejvyssi teploty = 
+VAR teplota_rank  =
+FILTER(
+ADDCOLUMNS(
+   VALUES(data[Teplota]),
+    "rank_teploty",RANKX(VALUES(data[Teplota]),data[Teplota],,DESC)),
+    [rank_teploty] <=3)
+
+return CONCATENATEX(teplota_rank,data[Teplota],", ",data[Teplota],DESC)
