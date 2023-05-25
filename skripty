@@ -1,0 +1,8 @@
+dim_datumy = 
+ADDCOLUMNS(    
+SELECTCOLUMNS(
+    CALENDARAUTO(),"datum",[Date]),
+"rok",YEAR([datum]),
+"kvartal",QUARTER([datum]),
+"mesic",MONTH([datum]),
+"tyden",WEEKNUM([datum],21))
