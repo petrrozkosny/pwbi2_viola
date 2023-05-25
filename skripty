@@ -101,3 +101,10 @@ _______________________________________________________________
 CALCULATE(
     SUM(data[Srazky]),
 dim_datumy[mesic] <= SELECTEDVALUE(dim_datumy[mesic]))
+
+_______________________________________________________________
+
+15 prvni datum maximalni teploty = 
+CALCULATE(
+    MIN(data[Datum]),
+data[Teplota] = MAX(data[Teplota]))
