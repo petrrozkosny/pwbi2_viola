@@ -70,3 +70,13 @@ IF(MAX(data[Teplota]) =
     MINX(
     ALL(data[rok]),
     CALCULATE(MAX(data[teplota]))),"CYAN")
+_____________________________________________
+
+
+12 pocet dnu bez srazek v ruzyne = 
+
+CALCULATE(
+    COUNT(data[Datum]),
+dim_lokality[Lokalita] = "RUZYNE",
+data[Srazky] = 0,
+NOT ISBLANK(data[Srazky]))
