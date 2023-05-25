@@ -161,3 +161,21 @@ ADDCOLUMNS(
     [rank_teploty] <=3)
 
 return CONCATENATEX(teplota_rank,data[Teplota],", ",data[Teplota],DESC)
+
+__________________________________________________
+
+20 rok max a min srazek = 
+
+VAR srazky_rok_mesic = ROUND(SUM(data[Srazky]),2)
+VAR srazky = 
+ADDCOLUMNS(
+ALL(data[rok]),
+"mesicni srazky",
+CALCULATE(SUM(data[Srazky])))
+VAR min_srazky = ROUND(MINX(srazky,[mesicni srazky]),2)
+VAR max_srazky = ROUND(MAXX(srazky,[mesicni srazky]),2)
+
+RETURN
+SWITCH(TRUE(),
+srazky_rok_mesic = min_srazky,"GOLD",
+srazky_rok_mesic = max_srazky,"CYAN")
