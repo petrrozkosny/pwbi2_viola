@@ -315,6 +315,14 @@ SUMMARIZE(
     data[Lokalita],"pocet chybejicich",COUNT(dim_datumy[datum]))
 ________________________________________________________________________
 
+
+34 suma srazek roky = 
+CALCULATE(
+    SUM(data[Srazky]),
+    data[rok] = SELECTEDVALUE(dim_roky[rok]))
+ ____________________________________________________
+
+
 35 suma srazek roky = 
 CALCULATE(
     SUM(data[Srazky]),
