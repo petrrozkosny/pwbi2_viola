@@ -346,3 +346,12 @@ SWITCH(SELECTEDVALUE(typ_obdobi[typ_obdobi]),
 "presne datum",SUM(data[Srazky]),
 "datum od",CALCULATE(SUM(data[Srazky]),dim_datumy[rok]>=SELECTEDVALUE(dim_datumy[rok])),BLANK()),
 "Vyberte jediny typ obdobi a jediny rok")
+
+_____________________________________________________
+
+38 predchozi rok = 
+IF("predchozi rok" IN VALUES(benchmark[benchmark]),
+CALCULATE(
+     SUM(data[Srazky]),
+SAMEPERIODLASTYEAR(dim_datumy[datum])),
+BLANK())
