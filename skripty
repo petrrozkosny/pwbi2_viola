@@ -243,6 +243,25 @@ VAR max_srazky = MAXX(tabulka_srazek,[suma srazek])
 RETURN
 IF(suma_srazek = max_srazky,"ANO","NE")
 
+___________________________________________________________
+
+27 nejteplejsi lokality = 
+
+VAR max_teplota = MAX(data[Teplota])
+VAR lokality_max_teploty = 
+CALCULATETABLE(VALUES(data[Lokalita]),data[Teplota] = max_teplota)
+
+RETURN
+CONCATENATEX(lokality_max_teploty,data[Lokalita],", ")
+
+
+______________________________________________________________
+
+28 dny max teploty = 
+VAR tabulka_max_teplot = 
+CALCULATETABLE(VALUES(data[Datum]),data[Teplota] = MAX(data[Teplota]))
+RETURN 
+CONCATENATEX(tabulka_max_teplot,data[Datum],", ")
 __________________________________________________________
 
 29 suma srazek predchozi mesic = 
@@ -256,3 +275,21 @@ CALCULATE(
     ,ALL(dim_datumy[rok],dim_datumy[mesic])
     ,dim_datumy[datum] > konec_predpredchozi_mesic
     && dim_datumy[datum] <= konec_predchozi_mesic) 
+
+__________________________________________________________________
+
+30 maximalni teplota mesice a roku = 
+VAR mesic = SELECTEDVALUE(dim_datumy[mesic])
+VAR rok = SELECTEDVALUE(dim_datumy[rok])
+
+-- maximalni teplota daneho dne
+VAR max_teplota = MAX(data[Teplota])
+-- maximalni teplota daneho mesic
+VAR max_teplota_mesic = 
+CALCULATE(MAX(data[Teplota]),
+ALL(dim_datumy[datum]),
+dim_datumy[rok] = rok,
+dim_datumy[mesic] = mesic)
+
+RETURN 
+IF(max_teplota = max_teplota_mesic,"tomato")
