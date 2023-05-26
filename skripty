@@ -293,3 +293,23 @@ dim_datumy[mesic] = mesic)
 
 RETURN 
 IF(max_teplota = max_teplota_mesic,"tomato")
+
+_________________________________________________________________
+
+chybejici datumy = 
+-- sumarizujeme / groupujeme / agregujeme tabulku tak,
+-- aby v ni nebyly vsechny datumy vypsany, ale agregovany,
+ -- na vystupu bude pocet dnu chybejiciho zaznamu pro danou lokalitu
+SUMMARIZE(
+    FILTER(
+    -- pridany sloupec zaznam
+    ADDCOLUMNS(
+    -- tabulka se vsemi datumy a lokalitami
+    GENERATE(
+        ALL(dim_datumy[datum]),
+        ALL(data[Lokalita])
+    ),"zaznam",
+    MAX(
+    CALCULATE(COUNT(data[Datum])),0)),
+    [zaznam] = 0),
+    data[Lokalita],"pocet chybejicich",COUNT(dim_datumy[datum]))
