@@ -403,3 +403,22 @@ IF(ISFILTERED(benchmark[benchmark]),
 IF("nejmene destivy rok" IN VALUES(benchmark[benchmark]),
      _suma_srazek,
 BLANK()),BLANK())
+
+_____________________________________________________________
+
+
+41 rank srazek = 
+VAR _tabulka  =
+    ADDCOLUMNS(
+    ALL(dim_datumy[rok],dim_datumy[mesic]),
+    "mesicni srazky",
+    CALCULATE(SUM(data[Srazky])))
+VAR _tabulka_rank = 
+    ADDCOLUMNS(_tabulka,"rank",RANKX(_tabulka,[mesicni srazky],,DESC))
+VAR _rank =  MINX(
+    FILTER(_tabulka_rank,
+    dim_datumy[mesic] = SELECTEDVALUE(dim_datumy[mesic])
+    && dim_datumy[rok] = SELECTEDVALUE(dim_datumy[rok])),
+    [rank])
+RETURN
+IF(_rank<=SELECTEDVALUE(pocet_mesicu[pocet_mesicu]),"CYAN")
