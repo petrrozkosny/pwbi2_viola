@@ -327,3 +327,11 @@ CALCULATE(
 CALCULATE(
     SUM(data[Srazky]),
     USERELATIONSHIP(data[rok],dim_roky[rok]))
+    
+________________________________________________________
+
+
+36 pocet zemi lokality = 
+CALCULATE(
+    COUNT(dim_lokality[Zeme]),
+    CROSSFILTER(data[Lokalita],dim_lokality[Lokalita],Both))
