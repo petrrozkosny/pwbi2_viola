@@ -242,3 +242,17 @@ VAR max_srazky = MAXX(tabulka_srazek,[suma srazek])
 
 RETURN
 IF(suma_srazek = max_srazky,"ANO","NE")
+
+__________________________________________________________
+
+29 suma srazek predchozi mesic = 
+
+VAR konec_predchozi_mesic = EOMONTH(MAX(dim_datumy[datum]),-1)
+VAR konec_predpredchozi_mesic = EOMONTH(MAX(dim_datumy[datum]),-2)
+
+RETURN
+CALCULATE(
+    SUM(data[Srazky])
+    ,ALL(dim_datumy[rok],dim_datumy[mesic])
+    ,dim_datumy[datum] > konec_predpredchozi_mesic
+    && dim_datumy[datum] <= konec_predchozi_mesic) 
