@@ -350,8 +350,9 @@ SWITCH(SELECTEDVALUE(typ_obdobi[typ_obdobi]),
 _____________________________________________________
 
 38 predchozi rok = 
+IF(ISFILTERED(benchmark[benchmark]),
 IF("predchozi rok" IN VALUES(benchmark[benchmark]),
 CALCULATE(
      SUM(data[Srazky]),
 SAMEPERIODLASTYEAR(dim_datumy[datum])),
-BLANK())
+BLANK()),BLANK())
