@@ -356,3 +356,26 @@ CALCULATE(
      SUM(data[Srazky]),
 SAMEPERIODLASTYEAR(dim_datumy[datum])),
 BLANK()),BLANK())
+
+_____________________________________________________
+
+39 srazky nejdestivejsi rok = 
+VAR _tabulka = 
+    ADDCOLUMNS(
+    ALL(dim_datumy[rok]),
+    "rocni srazky",
+    CALCULATE(SUM(data[Srazky])))
+VAR _maximalni_srazky = MAXX(_tabulka,[rocni srazky])
+VAR _rok_max_srazek = 
+    MAXX(
+        FILTER(_tabulka,
+        [rocni srazky] = _maximalni_srazky),
+    dim_datumy[rok])
+VAR _suma_srazek = 
+CALCULATE(SUM(data[Srazky]),
+dim_datumy[rok] = _rok_max_srazek)
+RETURN
+IF(ISFILTERED(benchmark[benchmark]),
+IF("nejdestivejsi rok" IN VALUES(benchmark[benchmark]),
+     _suma_srazek,
+BLANK()),BLANK())
