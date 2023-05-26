@@ -335,3 +335,14 @@ ________________________________________________________
 CALCULATE(
     COUNT(dim_lokality[Zeme]),
     CROSSFILTER(data[Lokalita],dim_lokality[Lokalita],Both))
+
+________________________________________________________
+
+37 srazky vybrane obdobi = 
+
+IF(
+AND(HASONEVALUE(typ_obdobi[typ_obdobi]),HASONEVALUE(dim_datumy[rok])),
+SWITCH(SELECTEDVALUE(typ_obdobi[typ_obdobi]),
+"presne datum",SUM(data[Srazky]),
+"datum od",CALCULATE(SUM(data[Srazky]),dim_datumy[rok]>=SELECTEDVALUE(dim_datumy[rok])),BLANK()),
+"Vyberte jediny typ obdobi a jediny rok")
